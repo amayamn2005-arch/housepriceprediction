@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>House Price Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <main class="page">
+
+        <header class="header">
+            <div class="brand-icon">H</div>
+            <span>HomeValue</span>
+            <span class="header-tag">ML PROJECT</span>
+        </header>
+
+        <section class="hero">
+            <p class="eyebrow">SMART PROPERTY ESTIMATOR</p>
+
+            <h1>
+                Find your home's<br>
+                <span>estimated value.</span>
+            </h1>
+
+            <p class="subtitle">
+                Enter your property details to get a price estimate
+                powered by machine learning.
+            </p>
+        </section>
+
+        <section class="predictor">
+
+            <div class="section-heading">
+                <h2>Property details</h2>
+                <p>Fill in the information below</p>
+            </div>
+
+            <form method="POST" action="/">
+
+                <div class="field">
+                    <label for="area">House area (sq. ft.)</label>
+
+                    <input
+                        id="area"
+                        name="area"
+                        type="number"
+                        min="1"
+                        max="100000"
+                        step="any"
+                        placeholder="e.g. 1500"
+                        value="{{ form_data.area }}"
+                        required
+                    >
+                </div>
+
+                <div class="field-row">
+
+                    <div class="field">
+                        <label for="bedrooms">Bedrooms</label>
+
+                        <input
+                            id="bedrooms"
+                            name="bedrooms"
+                            type="number"
+                            min="1"
+                            max="20"
+                            step="1"
+                            placeholder="e.g. 3"
+                            value="{{ form_data.bedrooms }}"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="bathrooms">Bathrooms</label>
+
+                        <input
+                            id="bathrooms"
+                            name="bathrooms"
+                            type="number"
+                            min="1"
+                            max="20"
+                            step="1"
+                            placeholder="e.g. 2"
+                            value="{{ form_data.bathrooms }}"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                <button type="submit">
+                    Predict House Price
+                    <span aria-hidden="true">&rarr;</span>
+                </button>
+
+            </form>
+
+            {% if prediction is not none %}
+                <div class="result" role="status">
+
+                    <p class="result-label">
+                        ESTIMATED HOUSE PRICE
+                    </p>
+
+                    <h2>
+                        &#8377;{{ "{:,.0f}".format(prediction) }}
+                    </h2>
+
+                    <p>
+                        Estimated by the trained machine learning model.
+                    </p>
+
+                </div>
+            {% endif %}
+
+            {% if error %}
+                <div class="error" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+        </section>
+
+        <p class="disclaimer">
+            This is an educational estimate based on sample data.
+            Actual property prices depend on location, condition,
+            land value, and other factors.
+        </p>
+
+    </main>
+</body>
+</html>
